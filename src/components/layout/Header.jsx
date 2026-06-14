@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
+import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,13 +14,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { User, Settings, Bell, LogOut } from "lucide-react";
+import { User, Settings, Bell, LogOut, Sun, Moon } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./Sidebar";
 
 export default function Header({ role, session }) {
   const router = useRouter();
   const { logout } = useAuth();
+  const { theme, toggleTheme, mounted } = useTheme();
 
   const getInitials = (name) => {
     return name
@@ -45,7 +47,7 @@ export default function Header({ role, session }) {
       <div className="flex items-center gap-4">
         <Sheet>
           <SheetTrigger
-            render={<Button variant="ghost" size="icon" className="lg:hidden" />}
+            render={<Button variant="ghost" size="icon" className="lg:hidden transition-transform duration-200 hover:scale-110" />}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -68,29 +70,44 @@ export default function Header({ role, session }) {
           </SheetContent>
         </Sheet>
 
-        <div>
+        <div className="hidden md:block">
           <h1 className="font-semibold text-lg capitalize">
             {role?.toLowerCase()} Dashboard
           </h1>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon">
+      <div className="flex items-center gap-2 sm:gap-4">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={toggleTheme}
+          className="relative transition-all duration-300 hover:scale-110 hover:bg-muted"
+          disabled={!mounted}
+        >
+          {mounted && theme === "dark" ? (
+            <Sun className="w-5 h-5 text-yellow-500" />
+          ) : (
+            <Moon className="w-5 h-5" />
+          )}
+        </Button>
+
+        <Button variant="ghost" size="icon" className="relative transition-transform duration-200 hover:scale-110">
           <Bell className="w-5 h-5" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger
-            render={<Button variant="ghost" className="relative h-10 w-10 rounded-full" />}
+            render={<Button variant="ghost" className="relative h-10 w-10 rounded-full transition-transform duration-200 hover:scale-110" />}
           >
-            <Avatar className="h-10 w-10">
+            <Avatar className="h-10 w-10 transition-shadow duration-200 hover:ring-2 hover:ring-primary/20">
               <AvatarFallback>
                 {getInitials(session?.user?.name)}
               </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" align="end">
+          <DropdownMenuContent className="w-56 animate-scale-in" align="end">
             <DropdownMenuGroup>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
@@ -109,16 +126,27 @@ export default function Header({ role, session }) {
               </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem className="transition-colors duration-200 cursor-pointer">
               <User className="mr-2 h-4 w-4" />
               Profile
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={toggleTheme}
+              className="transition-colors duration-200 cursor-pointer"
+            >
+              {theme === "dark" ? (
+                <Sun className="mr-2 h-4 w-4" />
+              ) : (
+                <Moon className="mr-2 h-4 w-4" />
+              )}
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </DropdownMenuItem>
+            <DropdownMenuItem className="transition-colors duration-200 cursor-pointer">
               <Settings className="mr-2 h-4 w-4" />
               Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive">
+            <DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive transition-colors duration-200 cursor-pointer">
               <LogOut className="mr-2 h-4 w-4" />
               Logout
             </DropdownMenuItem>

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export default function StatsCard({ title, value, icon: Icon, description, className }) {
   return (
-    <Card className={cn("transition-shadow hover:shadow-md", className)}>
+    <Card className={cn("transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover-lift", className)}>
       <CardContent className="p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
@@ -14,7 +14,7 @@ export default function StatsCard({ title, value, icon: Icon, description, class
             )}
           </div>
           {Icon && (
-            <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
+            <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:rotate-6">
               <Icon className="h-6 w-6 text-primary" />
             </div>
           )}

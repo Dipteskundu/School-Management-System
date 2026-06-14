@@ -49,9 +49,18 @@ These files are complete, stable, and working. Do not modify unless explicitly i
 
 These files are implemented and working. Use them as reference for code style and patterns.
 
-### Auth System
+### Auth System (COMPLETE - Login & Register Fully Working)
 | File | Description |
 |------|-------------|
+| `src/app/(auth)/login/page.js` | Complete login with form validation, role-based redirect, clickable demo credentials, auto-seed demo users |
+| `src/app/(auth)/register/page.js` | Complete registration with client-side validation |
+| `src/app/(auth)/layout.js` | Auth layout - working correctly |
+| `src/components/AuthProvider.jsx` | Session management, auto-redirect, context provider |
+| `src/app/api/auth/login/route.js` | Auth login endpoint - auto-creates demo users, fixes users without passwords |
+| `src/app/api/auth/register/route.js` | Auth register endpoint - working |
+| `src/app/api/auth/logout/route.js` | Auth logout endpoint - working |
+| `src/app/api/auth/session/route.js` | Session verification endpoint - working |
+| `src/lib/auth.js` | Password hashing + HMAC session tokens |
 | `src/components/Providers.jsx` | Root provider wrapper (AuthProvider + Toaster) |
 | `src/components/shared/StatsCard.jsx` | Reusable stats card component |
 | `src/app/not-found.js` | 404 page |
@@ -158,6 +167,8 @@ These routes have basic GET+POST but need authentication, filtering, PUT/DELETE:
 
 4. **Role-based access:** Four roles exist: `ADMIN`, `TEACHER`, `STUDENT`, `PARENT`. Dashboard pages are organized by role under `src/app/(dashboard)/[role]/`.
 
-5. **No real-time data:** All dashboard pages currently use hardcoded data. No page makes actual API calls to fetch data from MongoDB (except auth endpoints).
+5. **No real-time data:** All dashboard pages currently use hardcoded data. No page makes actual API calls to fetch data from MongoDB (except auth endpoints which are fully functional).
+
+6. **Login/Register system is COMPLETE:** The authentication system (login, register, logout, session management) is fully implemented and working. Do NOT modify auth-related files unless fixing a critical bug.
 
 6. **Mobile menu pattern:** The `Sidebar` component accepts an `isMobile` prop. When `false` (default), it has `hidden lg:flex` for desktop sidebar. When `true`, it renders always visible inside the `Sheet` component for mobile. The `Header` passes `isMobile={true}` to Sidebar inside the Sheet. Do not remove this pattern.

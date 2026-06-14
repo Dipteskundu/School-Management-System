@@ -68,7 +68,13 @@ export default function AuthProvider({ children }) {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-muted"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent absolute inset-0"></div>
+          </div>
+          <p className="text-sm text-muted-foreground animate-pulse">Loading...</p>
+        </div>
       </div>
     );
   }
