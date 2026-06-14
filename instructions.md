@@ -20,17 +20,17 @@ These files are complete, stable, and working. Do not modify unless explicitly i
 
 | File | Reason |
 |------|--------|
-| `src/app/(auth)/login/page.js` | Complete login with form validation, role-based redirect |
+| `src/app/(auth)/login/page.js` | Complete login with form validation, role-based redirect, and clickable demo credential buttons for quick testing. Demo users auto-seed on first login attempt if DB is empty |
 | `src/app/(auth)/register/page.js` | Complete registration with client-side validation |
 | `src/app/(auth)/layout.js` | Auth layout - working correctly |
 | `src/components/AuthProvider.jsx` | Session management, auto-redirect, context provider |
 | `src/components/layout/DashboardLayout.jsx` | Dashboard shell - auth guard + layout wrapper |
-| `src/components/layout/Header.jsx` | Full header with mobile menu, avatar dropdown, logout |
-| `src/components/layout/Sidebar.jsx` | Role-based navigation, active link highlighting |
+| `src/components/layout/Header.jsx` | Full header with mobile menu (Sheet), avatar dropdown, logout. Uses `isMobile` prop on Sidebar for mobile sheet |
+| `src/components/layout/Sidebar.jsx` | Role-based navigation. Accepts `isMobile` prop: `false` (default) = hidden on mobile, visible on lg+; `true` = always visible (used inside Sheet for mobile menu). Bottom section has Settings + Logout button |
 | `src/components/ui/input.jsx` | Uses standard HTML input (NOT @base-ui). Do NOT revert to @base-ui/react/input - it breaks controlled inputs |
 | `src/lib/auth.js` | Password hashing + HMAC session tokens - do not alter crypto logic |
 | `src/lib/mongodb.js` | Mongoose connection caching - do not alter |
-| `src/app/api/auth/login/route.js` | Auth login endpoint - working |
+| `src/app/api/auth/login/route.js` | Auth login endpoint - auto-creates demo users if they don't exist, and fixes users without passwords |
 | `src/app/api/auth/register/route.js` | Auth register endpoint - working |
 | `src/app/api/auth/logout/route.js` | Auth logout endpoint - working |
 | `src/app/api/auth/session/route.js` | Session verification endpoint - working |
@@ -133,7 +133,6 @@ These routes have basic GET+POST but need authentication, filtering, PUT/DELETE:
 
 | File | Issue |
 |------|-------|
-| `src/app/api/seed/route.js` | Creates users WITHOUT passwords - seeded accounts cannot log in |
 | `src/app/api/session/route.js` | Returns first DB user regardless of auth - NON-FUNCTIONAL, superseded by `/api/auth/session/` |
 | `src/proxy.js` | Wrong filename/export for Next.js middleware - will never execute |
 
@@ -160,3 +159,5 @@ These routes have basic GET+POST but need authentication, filtering, PUT/DELETE:
 4. **Role-based access:** Four roles exist: `ADMIN`, `TEACHER`, `STUDENT`, `PARENT`. Dashboard pages are organized by role under `src/app/(dashboard)/[role]/`.
 
 5. **No real-time data:** All dashboard pages currently use hardcoded data. No page makes actual API calls to fetch data from MongoDB (except auth endpoints).
+
+6. **Mobile menu pattern:** The `Sidebar` component accepts an `isMobile` prop. When `false` (default), it has `hidden lg:flex` for desktop sidebar. When `true`, it renders always visible inside the `Sheet` component for mobile. The `Header` passes `isMobile={true}` to Sidebar inside the Sheet. Do not remove this pattern.

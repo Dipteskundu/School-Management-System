@@ -64,7 +64,7 @@ export default function Header({ role, session }) {
             </svg>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
-            <Sidebar role={role} />
+            <Sidebar role={role} isMobile={true} />
           </SheetContent>
         </Sheet>
 

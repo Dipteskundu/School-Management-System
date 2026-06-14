@@ -5,6 +5,9 @@ import Student from "@/models/Student";
 import Teacher from "@/models/Teacher";
 import Class from "@/models/Class";
 import Subject from "@/models/Subject";
+import { hashPassword } from "@/lib/auth";
+
+const DEMO_PASSWORD = "password123";
 
 export async function POST() {
   try {
@@ -16,27 +19,33 @@ export async function POST() {
     await Class.deleteMany({});
     await Subject.deleteMany({});
 
+    const hashedPassword = hashPassword(DEMO_PASSWORD);
+
     const admin = await User.create({
       email: "admin@school.com",
       name: "Admin User",
+      password: hashedPassword,
       role: "ADMIN",
     });
 
     const teacherUser = await User.create({
       email: "teacher@school.com",
       name: "Dr. Robert Wilson",
+      password: hashedPassword,
       role: "TEACHER",
     });
 
     const studentUser = await User.create({
       email: "student@school.com",
       name: "John Smith",
+      password: hashedPassword,
       role: "STUDENT",
     });
 
     const parentUser = await User.create({
       email: "parent@school.com",
       name: "Jane Smith",
+      password: hashedPassword,
       role: "PARENT",
     });
 

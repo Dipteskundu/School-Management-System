@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/components/AuthProvider";
 import {
   GraduationCap,
   LayoutDashboard,
@@ -15,6 +16,7 @@ import {
   Settings,
   BarChart3,
   Bell,
+  LogOut,
 } from "lucide-react";
 
 const adminLinks = [
@@ -52,8 +54,9 @@ const parentLinks = [
   { href: "/parent/fees", label: "Fees", icon: DollarSign },
 ];
 
-export default function Sidebar({ role }) {
+export default function Sidebar({ role, isMobile = false }) {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   const getLinks = () => {
     switch (role) {
@@ -73,7 +76,10 @@ export default function Sidebar({ role }) {
   const links = getLinks();
 
   return (
-    <div className="hidden lg:flex lg:flex-col lg:w-64 lg:border-r bg-card">
+    <div className={cn(
+      "flex flex-col w-64 bg-card h-full",
+      !isMobile && "hidden lg:flex lg:border-r"
+    )}>
       <div className="flex items-center gap-2 px-6 py-5 border-b">
         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
           <GraduationCap className="w-5 h-5 text-primary-foreground" />
@@ -106,7 +112,7 @@ export default function Sidebar({ role }) {
         })}
       </nav>
 
-      <div className="px-3 py-4 border-t">
+      <div className="px-3 py-4 border-t space-y-1">
         <Link
           href="/settings"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
@@ -114,6 +120,13 @@ export default function Sidebar({ role }) {
           <Settings className="w-5 h-5" />
           Settings
         </Link>
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors w-full"
+        >
+          <LogOut className="w-5 h-5" />
+          Logout
+        </button>
       </div>
     </div>
   );

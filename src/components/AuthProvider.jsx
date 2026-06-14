@@ -40,10 +40,24 @@ export default function AuthProvider({ children }) {
   }, [fetchSession]);
 
   useEffect(() => {
-    if (!loading && !session && !pathname.startsWith("/login") && !pathname.startsWith("/register")) {
-      router.replace("/login");
+    if (!loading) {
+      if (!session && !pathname.startsWith("/login") && !pathname.startsWith("/register")) {
+        router.replace("/login");
+      } else if (session && (pathname.startsWith("/login") || pathname === "/")) {
+        const roleRoutes = {
+          ADMIN: "/admin",
+          TEACHER: "/teacher",
+          STUDENT: "/student",
+          PARENT: "/parent",
+        };
+        router.replace(roleRoutes[session.role] || "/admin");
+      }
     }
   }, [loading, session, pathname, router]);
+
+  const login = (user) => {
+    setSession(user);
+  };
 
   const logout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -59,13 +73,8 @@ export default function AuthProvider({ children }) {
     );
   }
 
-  const publicPages = ["/login", "/register"];
-  if (!session && publicPages.some((p) => pathname.startsWith(p))) {
-    return <>{children}</>;
-  }
-
   return (
-    <AuthContext.Provider value={{ session, logout, loading }}>
+    <AuthContext.Provider value={{ session, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
