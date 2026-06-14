@@ -1,0 +1,46 @@
+import mongoose from "mongoose";
+
+const scheduleSchema = new mongoose.Schema(
+  {
+    classId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Class",
+      required: true,
+    },
+    subject: {
+      type: String,
+      required: true,
+    },
+    teacherId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    dayOfWeek: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 6,
+    },
+    startTime: {
+      type: String,
+      required: true,
+    },
+    endTime: {
+      type: String,
+      required: true,
+    },
+    room: {
+      type: String,
+      default: null,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Schedule =
+  mongoose.models.Schedule || mongoose.model("Schedule", scheduleSchema);
+
+export default Schedule;
