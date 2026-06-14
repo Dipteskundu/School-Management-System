@@ -1,12 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
-
-const AuthProvider = dynamic(() => import("./AuthProvider"), {
-  ssr: false,
-  loading: () => <>{/* children will be rendered after mount */}</>,
-});
+import AuthProvider from "./AuthProvider";
+import { Toaster } from "sonner";
 
 export default function Providers({ children }) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      {children}
+      <Toaster position="top-right" richColors />
+    </AuthProvider>
+  );
 }
