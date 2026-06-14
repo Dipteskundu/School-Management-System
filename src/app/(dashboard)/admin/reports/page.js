@@ -1,12 +1,20 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Download, FileText, Users, TrendingUp } from "lucide-react";
+import { BarChart3, Download, FileText, Users, TrendingUp, DollarSign, GraduationCap, BookOpen } from "lucide-react";
+import {
+  EnrollmentByClassChart,
+  AttendanceOverviewChart,
+  GradeDistributionChart,
+  FeeCollectionSummaryChart,
+  TeacherPerformanceChart,
+  ClassPerformanceChart,
+} from "@/components/shared/ReportCharts";
 
 const reports = [
   { id: 1, title: "Student Enrollment Report", description: "Total students enrolled by class and section", icon: Users, count: "1,234 students" },
   { id: 2, title: "Attendance Report", description: "Monthly attendance summary for all classes", icon: BarChart3, count: "89.2% average" },
   { id: 3, title: "Grade Distribution", description: "Exam results and grade distribution", icon: TrendingUp, count: "450 records" },
-  { id: 4, title: "Fee Collection", description: "Fee payment status and collection summary", icon: FileText, count: "$45,678 collected" },
+  { id: 4, title: "Fee Collection", description: "Fee payment status and collection summary", icon: DollarSign, count: "$45,678 collected" },
 ];
 
 export default function ReportsPage() {
@@ -47,6 +55,21 @@ export default function ReportsPage() {
             </Card>
           );
         })}
+      </div>
+
+      <div>
+        <h3 className="text-lg font-semibold mb-4">Analytics Overview</h3>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <EnrollmentByClassChart />
+          <AttendanceOverviewChart />
+          <GradeDistributionChart />
+        </div>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <FeeCollectionSummaryChart />
+        <TeacherPerformanceChart />
+        <ClassPerformanceChart />
       </div>
     </div>
   );

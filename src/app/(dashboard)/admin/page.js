@@ -7,6 +7,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Users, BookOpen, Calendar, DollarSign, TrendingUp } from "lucide-react";
+import {
+  EnrollmentTrendChart,
+  RevenueOverviewChart,
+  StudentDistributionChart,
+  WeeklyAttendanceChart,
+} from "@/components/shared/DashboardCharts";
 
 const stats = [
   { title: "Total Students", value: "1,234", icon: Users, description: "+12% from last month" },
@@ -38,7 +44,14 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 stagger-children" style={{ animationDelay: '400ms' }}>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 stagger-children" style={{ animationDelay: '300ms' }}>
+        <EnrollmentTrendChart />
+        <RevenueOverviewChart />
+        <StudentDistributionChart />
+        <WeeklyAttendanceChart />
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 stagger-children" style={{ animationDelay: '500ms' }}>
         <Card className="transition-all duration-300 hover:shadow-lg">
           <CardHeader>
             <CardTitle>Recent Activities</CardTitle>
@@ -50,7 +63,7 @@ export default function AdminDashboard() {
                 <div
                   key={activity.id}
                   className="flex items-center justify-between border-b pb-4 last:border-0 last:pb-0 animate-fade-in-up"
-                  style={{ animationDelay: `${500 + index * 100}ms` }}
+                  style={{ animationDelay: `${600 + index * 100}ms` }}
                 >
                   <div>
                     <p className="text-sm font-medium">{activity.action}</p>
@@ -74,7 +87,7 @@ export default function AdminDashboard() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="animate-fade-in-up" style={{ animationDelay: '500ms' }}>
+              <div className="animate-fade-in-up" style={{ animationDelay: '600ms' }}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">Present</span>
                   <span className="text-sm text-green-600 font-medium">
@@ -89,7 +102,7 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="animate-fade-in-up" style={{ animationDelay: '600ms' }}>
+              <div className="animate-fade-in-up" style={{ animationDelay: '700ms' }}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">Absent</span>
                   <span className="text-sm text-red-600 font-medium">7.3%</span>
@@ -102,7 +115,7 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="animate-fade-in-up" style={{ animationDelay: '700ms' }}>
+              <div className="animate-fade-in-up" style={{ animationDelay: '800ms' }}>
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium">Late</span>
                   <span className="text-sm text-yellow-600 font-medium">

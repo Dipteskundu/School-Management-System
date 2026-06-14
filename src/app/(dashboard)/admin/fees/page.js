@@ -31,6 +31,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Search, DollarSign, CheckCircle, Clock } from "lucide-react";
+import { FeeCollectionChart, PaymentStatusChart, MonthlyTrendChart } from "@/components/shared/FeeCharts";
 
 const initialFees = [
   { id: 1, student: "John Smith", class: "10-A", feeType: "Tuition", amount: 500, paid: true, dueDate: "2024-01-15" },
@@ -164,6 +165,12 @@ export default function FeesPage() {
             </div>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <FeeCollectionChart fees={fees} />
+        <PaymentStatusChart fees={fees} />
+        <MonthlyTrendChart fees={fees} />
       </div>
 
       <Card>
